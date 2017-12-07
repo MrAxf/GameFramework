@@ -1,4 +1,4 @@
-import InputManager from "./InputManager";
+import InputManager from "../input/InputManager";
 
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
@@ -12,7 +12,7 @@ const defaultOptions = {
 export default class Game {
   constructor(options = {}, coreGear){
     //Setup options
-    this.options = {...options, ...defaultOptions};
+    this.options = {...defaultOptions, ...options};
     //Canvas container
     this.container = document.getElementById(this.options.container_id);
 

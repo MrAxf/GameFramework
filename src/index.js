@@ -1,9 +1,9 @@
-import Texture from './Texture';
-import TextureRegion from './TextureRegion';
-import SpriteBatch from './SpriteBatch';
-import Game from './Game';
-import Animation from './Animation';
-import Gear from './Gear';
+import Texture from './texture/Texture';
+import TextureRegion from './texture/TextureRegion';
+import SpriteBatch from './graphics/SpriteBatch';
+import Game from './core/Game';
+import Animation from './graphics/Animation';
+import Gear from './core/Gear';
 
 const game = new Game({}, new Gear({
 	load: [
@@ -16,7 +16,7 @@ const game = new Game({}, new Gear({
 		this.regions = this.texture.split(1, 3);
 		this.mario = new Animation(0.1, this.regions[0], Animation.PLAY_MODES.LOOP);
 		game.context.fillStyle = "cyan";
-		//this.song.play({loop: true});
+		this.song.play({volume: 0.75});
 	},
 	update() {
 		if(game.input.isKeyDown(39)) this.x += 4;

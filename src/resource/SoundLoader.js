@@ -1,5 +1,5 @@
-import Sound from './Sound';
-import SoundContext from './SoundContext';
+import Sound from '../sound/Sound';
+import SoundContext from '../sound/SoundContext';
 
 const AudioLoader = (url) => new Promise((resolve, reject) => {
   const formatUrl = `${window.location.origin}/${url}`;

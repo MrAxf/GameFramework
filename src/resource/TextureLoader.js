@@ -1,4 +1,4 @@
-import Texture from "./Texture";
+import Texture from "../texture/Texture";
 
 const TextureLoader = (url) => new Promise((resolve, reject) => {
   let img = new Image();

@@ -1,5 +1,5 @@
 import ImageBuffer from "./ImageBuffer";
-import M3 from "./Mat3";
+import M3 from "../maths/Mat3";
 
 export default class SpriteBatch {
 	constructor(context) {

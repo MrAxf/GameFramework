@@ -1,4 +1,4 @@
-import Resurce from './Resource';
+import Resurce from '../resource/Resource';
 
 export default class Gear{
   constructor({load, init, update, render}){
