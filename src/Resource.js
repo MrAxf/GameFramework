@@ -12,6 +12,6 @@ const TextureLoader = (url) => new Promise((resolve, reject) => {
   img.src = formatUlr;
 });
 
-const Resource = (assingTo, {type, source, id}) => ({assingData: {assingTo, id}, promise: TextureLoader(source)});
+const Resource = ({type, source}) => TextureLoader(source);
 
 export default Resource;

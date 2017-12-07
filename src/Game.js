@@ -1,3 +1,5 @@
+import InputManager from "./InputManager";
+
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
 const defaultOptions = {
@@ -13,7 +15,15 @@ export default class Game {
     this.options = {...options, ...defaultOptions};
     //Canvas container
     this.container = document.getElementById(this.options.container_id);
+
     this.setCanvas();
+
+    this.input = new InputManager();
+    this.container.addEventListener("keydown", e => {
+      this.input.keySet(e.keyCode, true);
+    });
+    this.container.addEventListener("keyup", e => this.input.keySet(e.keyCode, false));
+
     this.canvas = document.getElementById(`${this.options.container_id}-canvas`);
     this.canvas.width = this.options.width;
     this.canvas.height = this.options.height;
@@ -47,6 +57,7 @@ export default class Game {
     this.container.style.overflow = "hidden";
     this.container.style.width = "100%";
     this.container.style.height = "100%";
+    this.container.setAttribute("tabindex", "1");
 
     this.container.innerHTML = `<canvas id="${this.options.container_id}-canvas"></canvas>`;
   }
@@ -92,8 +103,8 @@ export default class Game {
     	this.then = now;
       let i = 60;
     	while(this.interval < this.lag){
+        this.input.update();
     		this.coreGear.update();
-    		//updateInputs();
     		this.lag -= this.interval;
     	}
     }

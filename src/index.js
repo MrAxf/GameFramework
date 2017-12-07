@@ -17,7 +17,9 @@ const game = new Game({}, new Gear({
 		game.context.fillStyle = "cyan";
 	},
 	update() {
-		this.x += 2;
+		if(game.input.isKeyDown(39)) this.x += 4;
+		if(game.input.isKeyDown(37)) this.x -= 4;
+		if (this.x < -60) this.x = 1021;
 		if (this.x > 1021) this.x = -60;
 	},
 	render() {
