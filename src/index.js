@@ -7,7 +7,8 @@ import Gear from './Gear';
 
 const game = new Game({}, new Gear({
 	load: [
-		{ type: 'Texture', source: 'mario.png', id: 'texture' }
+		{ type: 'Texture', source: 'mario.png', id: 'texture' },
+		{ type: 'Sound', source: 'song.mp3', id: 'song' }
 	],
 	init() {
 		this.x = 0;
@@ -15,6 +16,7 @@ const game = new Game({}, new Gear({
 		this.regions = this.texture.split(1, 3);
 		this.mario = new Animation(0.1, this.regions[0], Animation.PLAY_MODES.LOOP);
 		game.context.fillStyle = "cyan";
+		//this.song.play({loop: true});
 	},
 	update() {
 		if(game.input.isKeyDown(39)) this.x += 4;

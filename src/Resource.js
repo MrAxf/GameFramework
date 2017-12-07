@@ -1,17 +1,8 @@
-import Texture from "./Texture";
+import TextureLoader from './TextureLoader';
+import SoundLoader from './SoundLoader';
 
-const TextureLoader = (url) => new Promise((resolve, reject) => {
-  let img = new Image();
-  img.onload = () => {
-    resolve(new Texture(img));
-  };
-  let formatUlr = `${window.location.origin}/${url}`;
-  if ((new URL(formatUlr)).origin !== window.location.origin) {
-    img.crossOrigin = "";
-  }
-  img.src = formatUlr;
-});
+const Loaders = {TextureLoader, SoundLoader};
 
-const Resource = ({type, source}) => TextureLoader(source);
+const Resource = ({type, source}) => Loaders[`${type}Loader`](source);
 
 export default Resource;

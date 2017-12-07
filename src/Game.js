@@ -19,9 +19,7 @@ export default class Game {
     this.setCanvas();
 
     this.input = new InputManager();
-    this.container.addEventListener("keydown", e => {
-      this.input.keySet(e.keyCode, true);
-    });
+    this.container.addEventListener("keydown", e => this.input.keySet(e.keyCode, true));
     this.container.addEventListener("keyup", e => this.input.keySet(e.keyCode, false));
 
     this.canvas = document.getElementById(`${this.options.container_id}-canvas`);
