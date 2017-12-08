@@ -1,5 +1,5 @@
-import Texture from './texture/Texture';
-import TextureRegion from './texture/TextureRegion';
+import Texture from './graphics/texture/Texture';
+import TextureRegion from './graphics/texture/TextureRegion';
 import SpriteBatch from './graphics/SpriteBatch';
 import Game from './core/Game';
 import Animation from './graphics/Animation';

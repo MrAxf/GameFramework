@@ -62,8 +62,8 @@ export default class Game {
 
   fitCanvasToConatiner(){
     setTimeout(() => {
-      let canvasProportions = this.canvas.clientWidth / this.canvas.clientHeight;
-      let containerProportions = this.container.clientWidth / this.container.clientHeight;
+      const canvasProportions = this.canvas.clientWidth / this.canvas.clientHeight;
+      const containerProportions = this.container.clientWidth / this.container.clientHeight;
   
       if(containerProportions > canvasProportions){
         this.canvas.style.width = "auto";
@@ -95,11 +95,10 @@ export default class Game {
 
   loop(){
     if(this.running){
-      let now = Date.now();
+      const now = Date.now();
       this.deltaTime = now - this.then;
     	this.lag += this.deltaTime;
     	this.then = now;
-      let i = 60;
     	while(this.interval < this.lag){
         this.input.update();
     		this.coreGear.update();

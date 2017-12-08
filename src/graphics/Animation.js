@@ -18,7 +18,7 @@ export default class Animation{
 
   getFrame(deltaTime){
     if (this.animationEnded) return this.frames[this._frame];
-    let framesElapses = Math.floor((this._acumulateTime + deltaTime) / this.frameTime);
+    const framesElapses = Math.floor((this._acumulateTime + deltaTime) / this.frameTime);
     this._acumulateTime = (this._acumulateTime + deltaTime) - (framesElapses * this.frameTime);
     this._nextFrame(framesElapses);
     return this.frames[this._frame];

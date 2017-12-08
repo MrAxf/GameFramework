@@ -7,24 +7,24 @@ const M3 = {
 		];
 	},
 	multiply(a, b) {
-		let a00 = a[0 * 3 + 0];
-		let a01 = a[0 * 3 + 1];
-		let a02 = a[0 * 3 + 2];
-		let a10 = a[1 * 3 + 0];
-		let a11 = a[1 * 3 + 1];
-		let a12 = a[1 * 3 + 2];
-		let a20 = a[2 * 3 + 0];
-		let a21 = a[2 * 3 + 1];
-		let a22 = a[2 * 3 + 2];
-		let b00 = b[0 * 3 + 0];
-		let b01 = b[0 * 3 + 1];
-		let b02 = b[0 * 3 + 2];
-		let b10 = b[1 * 3 + 0];
-		let b11 = b[1 * 3 + 1];
-		let b12 = b[1 * 3 + 2];
-		let b20 = b[2 * 3 + 0];
-		let b21 = b[2 * 3 + 1];
-		let b22 = b[2 * 3 + 2];
+		const a00 = a[0 * 3 + 0];
+		const a01 = a[0 * 3 + 1];
+		const a02 = a[0 * 3 + 2];
+		const a10 = a[1 * 3 + 0];
+		const a11 = a[1 * 3 + 1];
+		const a12 = a[1 * 3 + 2];
+		const a20 = a[2 * 3 + 0];
+		const a21 = a[2 * 3 + 1];
+		const a22 = a[2 * 3 + 2];
+		const b00 = b[0 * 3 + 0];
+		const b01 = b[0 * 3 + 1];
+		const b02 = b[0 * 3 + 2];
+		const b10 = b[1 * 3 + 0];
+		const b11 = b[1 * 3 + 1];
+		const b12 = b[1 * 3 + 2];
+		const b20 = b[2 * 3 + 0];
+		const b21 = b[2 * 3 + 1];
+		const b22 = b[2 * 3 + 2];
 		return [
 			b00 * a00 + b01 * a10 + b02 * a20,
 			b00 * a01 + b01 * a11 + b02 * a21,
@@ -38,7 +38,7 @@ const M3 = {
 		];
 	},
 	translate(m, tx, ty) {
-		let translation = [
+		const translation = [
 			1, 0, 0,
 			0, 1, 0,
 			tx, ty, 1
@@ -46,7 +46,7 @@ const M3 = {
 		return this.multiply(m, translation);
 	},
 	rotate(m, angle) {
-		let rotation = [
+		const rotation = [
 			Math.cos(angle), Math.sin(angle), 0,
 			-Math.sin(angle), Math.cos(angle), 0,
 			0, 0, 1
@@ -54,7 +54,7 @@ const M3 = {
 		return this.multiply(m, rotation);
 	},
 	scale(m, sx, sy) {
-		let scalation = [
+		const scalation = [
 			sx, 0, 0,
 			0, sy, 0,
 			0, 0, 1

@@ -3,6 +3,6 @@ import SoundLoader from './SoundLoader';
 
 const Loaders = {TextureLoader, SoundLoader};
 
-const Resource = ({type, source}) => Loaders[`${type}Loader`](source);
+const Asset = ({type, source}) => Loaders[`${type}Loader`](source);
 
-export default Resource;
+export default Asset;
