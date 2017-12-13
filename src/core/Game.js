@@ -101,11 +101,11 @@ export default class Game {
     	this.then = now;
     	while(this.interval < this.lag){
         this.input.update();
-    		this.coreGear.update();
+    		this.coreGear.$update();
     		this.lag -= this.interval;
     	}
     }
-  	this.coreGear.render();
+  	this.coreGear.$render();
     requestAnimationFrame(this.loop);
   }
 
