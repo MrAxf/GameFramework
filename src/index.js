@@ -6,9 +6,11 @@ import Animation from './graphics/Animation';
 import Gear from './core/Gear';
 
 const marioGear = new Gear({
-	load: [
-		{ type: 'Texture', source: 'mario.png', id: 'texture' },
-	],
+	load(){
+		return {
+			texture: { type: 'Texture', source: 'mario.png' },
+		};
+	},
 	init() {
 		this.x = 0;
 		this.facingRight = 1;
@@ -38,14 +40,16 @@ const marioGear = new Gear({
 });
 
 const game = new Game({}, new Gear({
-	load: [
-		{ type: 'Sound', source: 'song.mp3', id: 'song' },
-		{ type: 'Texture', source: 'marioBg.png', id: 'background' },
-	],
+	load(){
+		return {
+			song: { type: 'Sound', source: 'song.mp3' },
+			background: { type: 'Texture', source: 'marioBg.png' },
+		};
+	},
 	init() {
 		this.sb = new SpriteBatch(game.context);
 		game.context.fillStyle = "cyan";
-		this.song.play({volume: 0.75, loop: true});
+		//this.song.play({volume: 0.75, loop: true});
 		this.gearStack.init();
 	},
 	update() {

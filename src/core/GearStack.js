@@ -32,7 +32,7 @@ export default class GearStack{
 
   load(game){
     for (let i = 0; i < this.stack.length; i++) {
-      this.stack[i].load(game);
+      this.stack[i].$load(game);
     }
   }
 }

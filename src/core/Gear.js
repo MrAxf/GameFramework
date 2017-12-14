@@ -2,23 +2,29 @@ import Asset from '../asset/Asset';
 import GearStack from './GearStack';
 
 export default class Gear{
-  constructor({load, init, update, render, gears}){
+  constructor(gear = {}){
+    const {load, init, update, render, gears} = {load:()=>({}), init:() => {}, update:() => {}, render:() => {}, gears:[], ...gear};
+
     this.init = init;
     this.gearStack = new GearStack(this, gears);
     this.pause = false;
     this.active = true;
     this.update = update;
     this.render = render;
-    this.loadData = [new Array(load.lenght), new Array(load.lenght)];
-    for (let i = 0; i < load.length; i++) {
-      const promise = Asset(load[i]);
-      this.loadData[0][i] = {assingTo: this, id: load[i].id};
-      this.loadData[1][i] = promise; 
-    }
+    this.load = load;
   }
 
-  load(game){
-    game.addToLoad(this.loadData);
+  $load(game){
+    const toLoad = Object.entries(this.load());
+    let loadData = [new Array(toLoad.lenght), new Array(toLoad.lenght)];
+    let i = 0;
+    for (let [key, value] of toLoad){
+      const promise = Asset(value);
+      loadData[0][i] = {assingTo: this, id: key};
+      loadData[1][i] = promise;
+      i++;
+    }
+    game.addToLoad(loadData);
     this.gearStack.load(game);
   }
 

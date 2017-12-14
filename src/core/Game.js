@@ -110,7 +110,7 @@ export default class Game {
   }
 
   start(){
-    this.coreGear.load(this);
+    this.coreGear.$load(this);
     this.load(() => {
       this.coreGear.init();
       this.running = true;
