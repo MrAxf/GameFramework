@@ -1,5 +1,6 @@
 import Sound from '../sound/Sound';
 import SoundContext from '../sound/SoundContext';
+import { AssetCache } from '../utils';
 
 const AudioLoader = (url) => new Promise((resolve, reject) => {
   const formatUrl = `${window.location.origin}/${url}`;
@@ -9,7 +10,11 @@ const AudioLoader = (url) => new Promise((resolve, reject) => {
 
   request.onload = () => SoundContext.decodeAudioData(
     request.response,
-    buffer => resolve(new Sound(buffer)),
+    buffer => {
+      const result = new Sound(buffer);
+      AssetCache.set(url, result);
+      return resolve(result);
+    },
     error => reject(error)
   );
 

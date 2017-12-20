@@ -23,7 +23,7 @@ export default class Sound{
     //Create GainNode for volume
     let gainNode = SoundContext.createGain();
     source.connect(gainNode);
-    gainNode.gain.value = volume;
+    gainNode.gain.setTargetAtTime(volume, SoundContext.currentTime, 0.015);
 
     gainNode.connect(SoundContext.destination);
     source.start(time);
@@ -46,6 +46,6 @@ export default class Sound{
 
   setvolume(id, volume){
     if(!this.isSet(id)) return false;
-    this.instances[id].gainNode.gain.value = volume;
+    this.instances[id].gainNode.gain.setTargetAtTime(volume, SoundContext.currentTime, 0.015);;
   }
 }
