@@ -5,7 +5,8 @@ export default class SpriteBatch {
 	constructor(context) {
 		this.context = context;
     this.buffer = new ImageBuffer(context.canvas.width, context.canvas.height);
-		this.drawing = false;
+    this.drawing = false;
+    this.projectionMatrix = M3.identity();
 	}
 	begin(){
 		if(this.drawing)
@@ -47,17 +48,14 @@ export default class SpriteBatch {
     let matrix = M3.identity();
 
     // this matrix will translate our quad to dstX, dstY
-    matrix = M3.translate(matrix, dstX, dstY);
+    matrix = M3.translate(matrix, dstX - (dstWidth * offsetX), dstY - (dstHeight * offsetY));
 
     matrix = M3.translate(matrix, dstWidth * offsetX, dstHeight * offsetY);
     matrix = M3.rotate(matrix, srcRotation * (Math.PI/180));
+    matrix = M3.scale(matrix, dstWidth/srcWidth, dstHeight/srcHeight);
     matrix = M3.translate(matrix, dstWidth * -offsetX, dstHeight * -offsetY);
 
-    // this matrix will scale our 1 unit quad
-    // from 1 unit to texWidth, texHeight units
-    matrix = M3.scale(matrix, dstWidth/srcWidth, dstHeight/srcHeight);
-
-    this.buffer.context.setTransform(...M3.toCanvas2dMatrix(matrix));
+    this.buffer.context.setTransform(...M3.toCanvas2dMatrix(M3.multiply(this.projectionMatrix, matrix)));
 
     this.buffer.context.drawImage(texture.image, srcX, srcY, srcWidth, srcHeight, 0, 0, srcWidth, srcHeight);
 	}
@@ -66,5 +64,11 @@ export default class SpriteBatch {
 			throw "This batch is not begin to draw";
 		this.drawing = false;
 		this.context.drawImage(this.buffer.canvas, 0, 0);
-	}
+  }
+  setProjection(matrix){
+    this.projectionMatrix = matrix;
+  }
+  resetProjection(){
+    this.projectionMatrix = M3.identity();
+  }
 }

@@ -6,7 +6,6 @@ const defaultOptions = {
   container_id: 'game-container',
   width: 960,
   height: 540,
-  ticks_per_second: 60,
 }
 
 export default class Game {
@@ -32,7 +31,6 @@ export default class Game {
     this.running = false;
     //Game loop data
     this.interval = 1000/this.options.ticks_per_second;
-    this.lag = 0;
     this.deltaTime = 0;
     this.then= 0;
     //bind game to loop function
@@ -94,18 +92,16 @@ export default class Game {
   }
 
   loop(){
+    const now = Date.now();
+    this.deltaTime = now - this.then;
+    this.then = now;
+    
     if(this.running){
-      const now = Date.now();
-      this.deltaTime = now - this.then;
-    	this.lag += this.deltaTime;
-    	this.then = now;
-    	while(this.interval < this.lag){
-        this.input.update();
-    		this.coreGear.$update();
-    		this.lag -= this.interval;
-    	}
+      this.input.update();
+    	this.coreGear.$update();
     }
-  	this.coreGear.$render();
+    
+    this.coreGear.$render();
     requestAnimationFrame(this.loop);
   }
 
@@ -125,7 +121,6 @@ export default class Game {
 
   continue(){
     this.then = Date.now();
-    this.lag = 0;
     this.running = true;
   }
 

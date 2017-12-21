@@ -4,6 +4,7 @@ import SpriteBatch from './graphics/SpriteBatch';
 import Game from './core/Game';
 import Animation from './graphics/Animation';
 import Gear from './core/Gear';
+import Camera from './graphics/Camera';
 
 const marioGear = new Gear({
 	load(){
@@ -13,6 +14,7 @@ const marioGear = new Gear({
 	},
 	init() {
 		this.x = 0;
+		this.speed = 140;
 		this.facingRight = 1;
 		this.walking = false;
 		this.regions = this.texture.split(1, 3);
@@ -21,12 +23,12 @@ const marioGear = new Gear({
 	update() {
 		this.walking = false;
 		if(game.input.isKeyDown(39)){
-			this.x += 4;
+			this.x += this.speed * game.getDeltaTime();
 			this.facingRight = 1;
 			this.walking = true;
 		} 
 		else if(game.input.isKeyDown(37)){
-			this.x -= 4;
+			this.x -= this.speed * game.getDeltaTime();
 			this.facingRight = 0;
 			this.walking = true;
 		}
@@ -47,12 +49,22 @@ const game = new Game({}, new Gear({
 		};
 	},
 	init() {
+		this.camera = new Camera(game.options.width, game.options.height);
+		this.camera.setOffset(0.5, 0.5);
+		this.camera.setPosition(game.options.width/2, game.options.height/2);
+		//this.camera.setZoom(2);
+		this.camera.update();
 		this.sb = new SpriteBatch(game.context);
+		this.sb.setProjection(this.camera.cameraMatrix);
 		game.context.fillStyle = "cyan";
 		//this.song.play({volume: 0.75, loop: true});
 		this.gearStack.init();
 	},
 	update() {
+		this.camera.setZoom(this.camera.zoom + 0.001);
+		this.camera.rotate(0.1);
+		this.camera.update();
+		this.sb.setProjection(this.camera.cameraMatrix);
 		this.gearStack.update();
 	},
 	render() {
