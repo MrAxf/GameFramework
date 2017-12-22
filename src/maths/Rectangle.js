@@ -3,9 +3,9 @@ import Vector2D from "./Vector2D";
 
 export default class Rectangle extends Polygon{
   constructor(x, y, width, height){
+    super([new Vector2D(x, y), new Vector2D(x, y + height), new Vector2D(x + width, y + height), new Vector2D(x + width, y)]);
     this.width = width;
     this.height = height;
-    super([new Vector2D(x, y), new Vector2D(x, y + height), new Vector2D(x + width, y + height), new Vector2D(x + width, y)]);
   }
 
   getNormals(){

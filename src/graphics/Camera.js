@@ -49,7 +49,6 @@ export default class Camera{
     matrix = M3.scale(matrix, this.zoom, this.zoom);
     matrix = M3.translate(matrix, this.width * -this.offsetX, this.height * -this.offsetY);
 
-
     this.cameraMatrix = matrix;
   }
 

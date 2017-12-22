@@ -2,30 +2,76 @@ import InputManager from "../input/InputManager";
 
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
+/**
+ * Default options for Game.
+ */
 const defaultOptions = {
   container_id: 'game-container',
   width: 960,
   height: 540,
 }
 
-export default class Game {
+/**
+ * Main class of the frawerwork, define a Game.
+ * 
+ * @class
+ */
+class Game {
+
+  /**
+   * Create a game.
+   * 
+   * @param {object} options - Options that define a game.
+   * @param {Gear} coreGear - Main Gear module of a game.
+   */
   constructor(options = {}, coreGear){
-    //Setup options
+    
+    /**
+     * Options that define the Game.
+     * 
+     * @member {option}
+     */
     this.options = {...defaultOptions, ...options};
-    //Canvas container
+    
+    /**
+     * Game container defined at DOM.
+     * 
+     * @member {object} 
+     */
     this.container = document.getElementById(this.options.container_id);
 
     this.setCanvas();
 
+    /**
+     * Manage the inputs of the Game
+     * 
+     * @member {InputManager}
+     */
     this.input = new InputManager();
     this.container.addEventListener("keydown", e => this.input.keySet(e.keyCode, true));
     this.container.addEventListener("keyup", e => this.input.keySet(e.keyCode, false));
 
+    /**
+     * Defines the canvas inside the game container
+     * 
+     * @member {object}
+     */
     this.canvas = document.getElementById(`${this.options.container_id}-canvas`);
     this.canvas.width = this.options.width;
     this.canvas.height = this.options.height;
+
+    /**
+     * Defines the context of the canvas.
+     * 
+     * @member {object}
+     */
     this.context = this.canvas.getContext('2d');
-    //FullScreen
+    
+    /**
+     * Defines if the Game is in fullScreen mode.
+     * 
+     * @member {boolean}
+     */
     this.fullScreenActive = false;
     //game running
     this.running = false;
@@ -144,4 +190,6 @@ export default class Game {
         then();
       });
   }
-} 
+}
+
+export default Game;
