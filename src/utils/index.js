@@ -1,3 +1,3 @@
-const AssetCache = new Map();
+const AssetCache = new Map()
 
-export { AssetCache } ;
+export { AssetCache } 
