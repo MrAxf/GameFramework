@@ -27,21 +27,26 @@ class Game {
    */
   constructor(options = {}, coreGear){
     
+    const options = {...defaultOptions, ...options}
+
     /**
-     * Options that define the Game.
-     * 
-     * @member {option}
+     * TODO
      */
-    this.options = {...defaultOptions, ...options}
+    this.width = options.width
+
+    /**
+     * TODO
+     */
+    this.height = options.height
     
     /**
      * Game container defined at DOM.
      * 
      * @member {object} 
      */
-    this.container = document.getElementById(this.options.container_id)
+    this.container = document.getElementById(options.container_id)
 
-    this.setCanvas()
+    this.setCanvas(options.container_id)
 
     /**
      * Manage the inputs of the Game
@@ -57,9 +62,9 @@ class Game {
      * 
      * @member {object}
      */
-    this.canvas = document.getElementById(`${this.options.container_id}-canvas`)
-    this.canvas.width = this.options.width
-    this.canvas.height = this.options.height
+    this.canvas = document.getElementById(`${options.container_id}-canvas`)
+    this.canvas.width = this.width
+    this.canvas.height = this.height
 
     /**
      * Defines the context of the canvas.
@@ -77,7 +82,6 @@ class Game {
     //game running
     this.running = false
     //Game loop data
-    this.interval = 1000/this.options.ticks_per_second
     this.deltaTime = 0
     this.then= 0
     //bind game to loop function
@@ -86,7 +90,7 @@ class Game {
     this.coreGear = coreGear
   }
 
-  setCanvas(){
+  setCanvas(container_id){
     this.container.requestFullScreen = this.container.requestFullscreen || this.container.msRequestFullscreen || this.container.mozRequestFullScreen || this.container.webkitRequestFullscreen
 
     document.exitFullScreen = document.exitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen || document.webkitCancelFullScreen
@@ -101,7 +105,7 @@ class Game {
     this.container.style.height = "100%"
     this.container.setAttribute("tabindex", "1")
 
-    this.container.innerHTML = `<canvas id="${this.options.container_id}-canvas"></canvas>`
+    this.container.innerHTML = `<canvas id="${container_id}-canvas"></canvas>`
   }
 
   fitCanvasToConatiner(){
@@ -120,9 +124,9 @@ class Game {
   }
 
   resizeCanvas(renderer, width = 960, height = 540, force = false){
-    if(!force && this.options.width == width && this.options.height == height) return
-    this.options.width = width
-    this.options.height = height
+    if(!force && this.width == width && this.height == height) return
+    this.width = width
+    this.height = height
 
     this.canvas.width = width
     this.canvas.height = height
