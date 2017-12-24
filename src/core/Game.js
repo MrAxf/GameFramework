@@ -27,44 +27,44 @@ class Game {
    */
   constructor(options = {}, coreGear){
     
-    const options = {...defaultOptions, ...options}
+    const { container_id, width, height } = {...defaultOptions, ...options}
 
     /**
      * TODO
      */
-    this.width = options.width
+    this.width = width
 
     /**
      * TODO
      */
-    this.height = options.height
+    this.height = height
     
     /**
      * Game container defined at DOM.
      * 
      * @member {object} 
      */
-    this.container = document.getElementById(options.container_id)
+    this.container = document.getElementById(container_id)
 
-    this.setCanvas(options.container_id)
-
-    /**
-     * Manage the inputs of the Game
-     * 
-     * @member {InputManager}
-     */
-    this.input = new InputManager()
-    this.container.addEventListener("keydown", e => this.input.keySet(e.keyCode, true))
-    this.container.addEventListener("keyup", e => this.input.keySet(e.keyCode, false))
+    this.setCanvas(container_id)
 
     /**
      * Defines the canvas inside the game container
      * 
      * @member {object}
      */
-    this.canvas = document.getElementById(`${options.container_id}-canvas`)
+    this.canvas = document.getElementById(`${container_id}-canvas`)
     this.canvas.width = this.width
     this.canvas.height = this.height
+    this.canvas.style.outline = "none"
+    this.canvas.setAttribute("tabindex", "1")
+
+    /**
+     * Manage the inputs of the Game
+     * 
+     * @member {InputManager}
+     */
+    this.input = new InputManager(this.canvas)
 
     /**
      * Defines the context of the canvas.
@@ -103,7 +103,6 @@ class Game {
     this.container.style.overflow = "hidden"
     this.container.style.width = "100%"
     this.container.style.height = "100%"
-    this.container.setAttribute("tabindex", "1")
 
     this.container.innerHTML = `<canvas id="${container_id}-canvas"></canvas>`
   }

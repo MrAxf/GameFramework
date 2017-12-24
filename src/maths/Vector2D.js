@@ -16,6 +16,11 @@ export default class Vector2D{
     this.y += vector.y
   }
 
+  setPosition(x, y){
+    this.x = x
+    this.y = y
+  }
+
   rotate(rotation){
     let matrix = M3.identity()
     matrix = M3.rotate(matrix, rotation * (Math.PI/180))
