@@ -1,5 +1,5 @@
-import InputManager from "../input/InputManager"
 import { Loader } from '../assetLoader'
+import InputManager from '../input/InputManager'
 
 const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 
@@ -82,7 +82,7 @@ class Game {
     //game running
     this.running = false
     //Game loop data
-    this.deltaTime = 0
+    this.delta = 0
     this.then= 0
     //bind game to loop function
     this.loop = this.loop.bind(this)
@@ -142,7 +142,7 @@ class Game {
 
   loop(){
     const now = Date.now()
-    this.deltaTime = now - this.then
+    this.delta = now - this.then
     this.then = now
     
     if(this.running){
@@ -173,8 +173,12 @@ class Game {
     this.running = true
   }
 
-  getDeltaTime() {
-    return this.deltaTime/1000
+  addInputManagers(...args) {
+    this.input.addManagers([...args])
+  }
+
+  get deltaTime() {
+    return this.delta/1000
   }
 
 }
