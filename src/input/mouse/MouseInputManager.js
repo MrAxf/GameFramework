@@ -1,7 +1,8 @@
 import { Vector2D } from '../../maths'
-import mouse from './MouseButtons'
+import BUTTONS from './MouseButtons'
 
 const MouseInputManager = {
+  BUTTONS,
   init(){
     this._mouseButtons = [
       [false, false],
@@ -9,7 +10,6 @@ const MouseInputManager = {
       [false, false]
     ]
     this.mousePosition = new Vector2D(0, 0)
-    this.mouse = mouse
 
     this.canvas.addEventListener("mousedown", e => this._clickSet(e.button, true))
     this.canvas.addEventListener("mouseup", e => this._clickSet(e.button, false))
