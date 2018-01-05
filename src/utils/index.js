@@ -1,3 +1,4 @@
 const AssetCache = new Map()
 
-export { AssetCache } 
+export { AssetCache }
+export { default as EventEmiter } from './EventEmiter'

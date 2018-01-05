@@ -1,4 +1,5 @@
 import { Loader } from '../assetLoader'
+import { EventEmiter } from '../utils'
 import GearStack from './GearStack'
 
 export default class Gear{
@@ -32,5 +33,17 @@ export default class Gear{
   $render(...args){
     if(this.active)
       this.render(...args)
+  }
+
+  $emit(message, ...args){
+    EventEmiter.emit(message, ...args)
+  }
+
+  $subscribe(message, callback){
+    EventEmiter.subscribe(this, message, callback.bind(this))
+  }
+
+  $unsubscribe(message){
+    EventEmiter.unsubscribe(this, message)
   }
 }
