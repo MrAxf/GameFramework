@@ -16,7 +16,9 @@ export default class SpriteBatch {
 	}
 	drawTexture(texture, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, srcRotation = 0, offsetX = 0, offsetY = 0){
 		if(!this.drawing)
-			throw "This batch is not begin to draw"
+      throw "This batch is not begin to draw"
+      
+    this.buffer.context.save()
 		if (dstX === undefined) {
       dstX = srcX
       srcX = 0
@@ -58,6 +60,8 @@ export default class SpriteBatch {
     this.buffer.context.setTransform(...M3.toCanvas2dMatrix(M3.multiply(this.projectionMatrix, matrix)))
 
     this.buffer.context.drawImage(texture.image, srcX, srcY, srcWidth, srcHeight, 0, 0, srcWidth, srcHeight)
+
+    this.buffer.context.restore()
 	}
 	end(){
 		if(!this.drawing)
