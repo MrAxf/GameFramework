@@ -1,10 +1,9 @@
-import ImageBuffer from "./ImageBuffer"
 import M3 from "../maths/Mat3"
 
 export default class SpriteBatch {
 	constructor(context) {
 		this.context = context
-    this.buffer = new ImageBuffer(context.canvas.width, context.canvas.height)
+    this._spriteQueue = []
     this.drawing = false
     this.projectionMatrix = M3.identity()
 	}
@@ -12,13 +11,11 @@ export default class SpriteBatch {
 		if(this.drawing)
 			throw "This batch is currenly drawing"
 		this.drawing = true
-		this.buffer.clear()
 	}
 	drawTexture(texture, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, srcRotation = 0, offsetX = 0, offsetY = 0){
 		if(!this.drawing)
       throw "This batch is not begin to draw"
       
-    this.buffer.context.save()
 		if (dstX === undefined) {
       dstX = srcX
       srcX = 0
@@ -57,22 +54,30 @@ export default class SpriteBatch {
     matrix = M3.scale(matrix, dstWidth/srcWidth, dstHeight/srcHeight)
     matrix = M3.translate(matrix, dstWidth * -offsetX, dstHeight * -offsetY)
 
-    this.buffer.context.setTransform(...M3.toCanvas2dMatrix(M3.multiply(this.projectionMatrix, matrix)))
-
-    this.buffer.context.drawImage(texture.image, srcX, srcY, srcWidth, srcHeight, 0, 0, srcWidth, srcHeight)
-
-    this.buffer.context.restore()
+    this._spriteQueue.push({texture: texture.image, matrix, srcX: Math.round(srcX), srcY: Math.round(srcY), srcWidth: Math.round(srcWidth), srcHeight: Math.round(srcHeight)})  
 	}
 	end(){
 		if(!this.drawing)
 			throw "This batch is not begin to draw"
 		this.drawing = false
-		this.context.drawImage(this.buffer.canvas, 0, 0)
+		this._drawStack()
   }
   setProjection(matrix){
     this.projectionMatrix = matrix
   }
   resetProjection(){
     this.projectionMatrix = M3.identity()
+  }
+  _drawStack(){
+    while(this._spriteQueue.length){
+      const {texture, matrix, srcX, srcY, srcWidth, srcHeight} = this._spriteQueue.shift()
+
+      this.context.save()
+
+      this.context.setTransform(...M3.toCanvas2dMatrix(M3.multiply(this.projectionMatrix, matrix)))
+      this.context.drawImage(texture, srcX, srcY, srcWidth, srcHeight, 0, 0, srcWidth, srcHeight)
+
+      this.context.restore()
+    }
   }
 }
